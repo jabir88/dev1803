@@ -41,6 +41,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('product') }}">{{ __('product') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('change.password') }}">{{ __('change password') }}</a>
+                        </li>
                     @endauth
                     </ul>
 
