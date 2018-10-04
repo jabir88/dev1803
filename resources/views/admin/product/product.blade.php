@@ -1,15 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.adminmaster')
 
 @section('content')
   <div class="container">
       <div class="row justify-content-center">
-          <div class="col-md-8">
+          <div class="col-md-10">
               <div class="card p-4" >
                 <h2>All Product</h2>
                 <div class="my-3 ">
-                  <div class="form-group">
+                  {{-- <div class="form-group">
                         <input type="text" name="search" id="search" class="form-control" placeholder="Search Customer Data" />
-                       </div>
+                       </div> --}}
                 </div>
 
                 @if (session('delete'))
@@ -18,7 +18,7 @@
                   </div>
               @endif
 
-              <table class="table">
+              <table id="dataTables" class="table table-striped table-bordered" >
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col">#</th>
@@ -30,66 +30,43 @@
                 </thead>
                 <tbody>
                   @php
-                    $i =1;
+                  $i = 1;
+                    // $i =$all_pro->perPage() * ($all_pro->currentPage() - 1)+1;
                   @endphp
+
                   @foreach ($all_pro as $one_pro)
-
                   <tr>
-
                     <th scope="row">{{ $i }}</th>
                     <td>{{ $one_pro->product_name }}</td>
                     <td>{{ $one_pro->product_price }}</td>
                     <td>{{ $one_pro->product_quantity }}</td>
                     <td>
                       <a href="{!! route('product.edit',['product_id' => $one_pro->id]) !!}">
-                        <button type="button" name="button " class="btn btn-info"><i class="far fa-edit"></i>  </button>
+                        <button type="button" name="button " class="btn btn-info"><i class="fa fa-edit"></i>  </button>
                       </a>
                       <a href="{!! route('product.delete',['product_id' => $one_pro->id]) !!}">
-                        <button type="button" name="button " class="btn btn-danger"><i class="fas fa-trash-alt"></i>  </button>
+                        <button type="button" name="button " class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>  </button>
                       </a>
                     </td>
-
                   </tr>
-
                   @php
                     $i++;
                   @endphp
-
                 @endforeach
 
                 </tbody>
               </table>
-              {{ $all_pro->links() }}
+              {{-- {{ $all_pro->links() }} --}}
               </div>
           </div>
-          <div class="col-md-4">
-              <div class="card p-4" >
-                <h2>Add Product</h2>
-                @if (session('status'))
-                  <div class="alert alert-success">
-                      {{ session('status') }}
-                  </div>
-              @endif
-                <form action="{!! route('product.submit') !!}" method="post">
-                  @csrf
-                  <div class="form-group">
-                    <label for="product_name">Product Name</label>
-                    <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Product Name">
-                  </div>
-                  <div class="form-group">
-                    <label for="product_price">Product Price</label>
-                    <input type="text" class="form-control" id="product_price" name="product_price" placeholder="Product Price">
-                  </div>
-                  <div class="form-group">
-                    <label for="product_quantity">Product Quantity</label>
-                    <input type="text" class="form-control" id="product_quantity" name="product_quantity" placeholder="Product Quantity">
-                  </div>
 
-                  <button type="submit" name="btn" class="btn btn-primary">Submit</button>
-                </form>
-              </div>
-          </div>
       </div>
   </div>
+
+@endsection
+@section('richtext_scr')
+  <script type="text/javascript">
+  $('.mytext').richText();
+  </script>
 
 @endsection

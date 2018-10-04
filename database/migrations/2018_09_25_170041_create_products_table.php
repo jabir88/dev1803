@@ -18,6 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('product_name');
             $table->integer('product_price');
             $table->integer('product_quantity');
+            $table->text('product_description');
+            $table->string('product_photo')->default('product/defaultproductphoto.jpg');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -21,11 +21,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //product insert , edit , delete ,read routes
 
-Route::get('/product', 'AdminController@product')->name('product');
-Route::post('/product/submit', 'AdminController@productsub')->name('product.submit');
-Route::get('/product/edit/{product_id}', 'AdminController@product_edit')->name('product.edit');
-Route::get('/product/delete/{product_id}', 'AdminController@product_delete')->name('product.delete');
-Route::post('/product/edit/submit', 'AdminController@product_update')->name('product.edit.submit');
+Route::get('/product', 'ProductController@product')->name('product');
+Route::get('/product/add', 'ProductController@productadd')->name('product.add');
+Route::post('/product/submit', 'ProductController@productsub')->name('product.submit');
+Route::get('/product/edit/{product_id}', 'ProductController@product_edit')->name('product.edit');
+Route::get('/product/delete/{product_id}', 'ProductController@product_delete')->name('product.delete');
+Route::post('/product/edit/submit', 'ProductController@product_update')->name('product.edit.submit');
 
 //  change password routes
 
