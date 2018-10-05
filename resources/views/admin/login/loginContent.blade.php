@@ -43,10 +43,20 @@
                                         {{Form::email('email', $value = null, ['class'=>'form-control','placeholder'=>'E-mail Address'])}}
                                       <!-- <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus> -->
                                   </div>
+                                  @if ($errors->has('email'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
                                   <div class="form-group">
                                     {{Form::password('password',  ['class'=>'form-control','placeholder'=>'Password'])}}
                                       <!-- <input class="form-control" placeholder="Password" name="password" type="password" value=""> -->
                                   </div>
+                                  @if ($errors->has('password'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                    @endif
                                   <div class="checkbox">
                                       <label>{{Form::checkbox('remember', 'I Agree')}} I Agree</label>
                                   </div>
@@ -56,15 +66,26 @@
                                     <!-- <button value="Login" type="submit" class="form-control btn-success" name="button">Login</button> -->
                                   <!-- <input class="form-control  btn-lg btn-success "  name="button" value="Login" type="submit" > -->
                                   </div>
-                                  <div class="panel-body">
-                       <a href="{{ url('auth/google') }}" class="btn btn-lg btn-primary btn-block">
+                                  {{-- <div class="panel-body">
+                                   <a href="{{ url('auth/google') }}" class="btn btn-lg btn-primary btn-block">
 
-                           <strong>Login With Google</strong>
+                                       <strong>Login With Google</strong>
 
-                       </a>
+                                   </a>
+                                </div> --}}
+
+                              <div class="panel-body">
+                                <a href="{{ url('auth/google') }}">
+                                  <button type="button" class="loginBtn loginBtn--google">
+                                    Login with Google
+                                  </button>
+                                </a>
+                              </div>
+                                {{-- <button class="loginBtn loginBtn--facebook">
+                  Login with Facebook
+                  </button> --}}
 
 
-                 </div>
                               </fieldset>
                             {!!Form::close()!!}
 

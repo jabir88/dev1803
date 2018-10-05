@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
+use PDF;
 use Auth;
 use App\Product;
+use App\Exports\ProductExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -27,7 +31,7 @@ class ProductController extends Controller
         if ($request->hasFile('product_photo')) {
             $path = $request->file('product_photo')->storeAs(
                 'product',
-                "user-".  rand(10000, 200000)
+                "user-".  rand(10000, 200000).".jpeg"
           );
 
             Product::insert([
@@ -70,14 +74,47 @@ class ProductController extends Controller
         Product::where('id', $product_id)->delete();
         return back()->with('delete', 'Product Deleted Successfully!');
     }
-    public function product_update()
+    public function product_update(Request $request)
     {
-        Product::where('id', $_POST['product_id'])->update([
-      'product_name' => $_POST['product_name'],
-      'product_price' => $_POST['product_price'],
-      'product_quantity' => $_POST['product_quantity'],
-      'product_photo' => $_POST['product_photo'],
-    ]);
+        Product::where('id', $request->product_id)->update([
+          'product_name' => $request->product_name,
+          'product_price' => $request->product_price,
+          'product_quantity' => $request->product_quantity,
+          'product_description' => $request->product_description,
+        ]);
         return back()->with('edit', 'Product Updated!');
+        // if ($request->hasFile('product_photo')) {
+            // echo "aje";
+
+
+
+        //
+            //a
+            // return back()->with('edit', 'Product Updated!');
+        // } else {
+            // echo "aj nae";
+            //   Product::where('id', $_POST['product_id'])->update([
+          //   'product_name' => $_POST['product_name'],
+          //   'product_price' => $_POST['product_price'],
+          //   'product_quantity' => $_POST['product_quantity'],
+          // ]);
+          //   return back()->with('edit', 'Product Updated!');
+        // }
+        //
+    }
+    public function export()
+    {
+        return Excel::download(new ProductExport, 'products_list.xlsx');
+    }
+    public function downloadpdf()
+    {
+        $all_pro =  Product::all();
+        $pdf = PDF::loadView('pdf.invoice', compact('all_pro'));
+        return $pdf->stream('invoice.pdf');
+        // return view('pdf.invoice', compact('all_pro'));
+        //download pdf
+        // $pdf = PDF::loadView('pdf.invoice', compact('all_pro'));
+        // return $pdf->download('invoice.pdf');
+        //Show pdf
     }
 }

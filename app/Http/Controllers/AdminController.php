@@ -19,7 +19,39 @@ class AdminController extends Controller
 
     public function change_password()
     {
-        return view('admin.password.password');
+        if (!empty(Auth::user()->provider_id)) {
+            abort(404);
+        } else {
+            return view('admin.password.password');
+        }
+    }
+    public function set_password()
+    {
+        if (empty(Auth::user()->provider_id)) {
+            abort(404);
+        } else {
+            return view('admin.password.setpassword');
+        }
+    }
+    public function set_password_done(Request $request)
+    {
+        $request -> validate([
+          'new_pass' => 'required|string|min:6',
+          'retype_pass' => 'required|same:new_pass',
+
+        ], [
+
+          'new_pass.required' => "Please Enter Your Password!",
+          'new_pass.string' => "Invalid New Password!",
+          'new_pass.min' => "Password should be minimum 6 characters!",
+          'retype_pass.required' => "Please Enter Your Re-type Password!",
+          'retype_pass.same' => "Password Doesn't Match!",
+        ]);
+        $new_pass = bcrypt($request->new_pass);
+        User::where('id', Auth::user()->id)->update([
+        'password' =>$new_pass,
+        ]);
+        return back()->with('hoise', "Password Set Successfully");
     }
     public function change_password_done(Request $request)
     {

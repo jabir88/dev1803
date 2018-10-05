@@ -22,6 +22,7 @@
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Product Photo</th>
                     <th scope="col">Product Name</th>
                     <th scope="col">Product Price</th>
                     <th scope="col">Product Quantity</th>
@@ -37,6 +38,9 @@
                   @foreach ($all_pro as $one_pro)
                   <tr>
                     <th scope="row">{{ $i }}</th>
+                    <td>
+                      <img src="storage/{{ $one_pro->product_photo }}" height="100"alt="">
+                    </td>
                     <td>{{ $one_pro->product_name }}</td>
                     <td>{{ $one_pro->product_price }}</td>
                     <td>{{ $one_pro->product_quantity }}</td>
@@ -56,6 +60,12 @@
 
                 </tbody>
               </table>
+              <a href="{!! route('download.pdf') !!}">
+                <button type="button" class="btn btn-primary btn-sm">PDF</button>
+              </a>
+              <a href="{!! route('download.export') !!}">
+                <button type="button" class="btn btn-primary btn-sm">Excel</button>
+              </a>
               {{-- {{ $all_pro->links() }} --}}
               </div>
           </div>

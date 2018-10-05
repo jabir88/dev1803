@@ -17,11 +17,17 @@
             </li>
 
             @auth
-            <li>
-                <a href="{{ route('change.password') }}"><i class="fa fa-table fa-fw"></i> Change Password</a>
-            </li>
+              @if (empty(Auth::user()->provider_id))
+                <li>
+                    <a href="{{ route('change.password') }}"><i class="fa fa-table fa-fw"></i> Change Password</a>
+                </li>
+              @else
+                <li>
+                    <a href="{{ route('new.password') }}"><i class="fa fa-table fa-fw"></i> Set Password</a>
+                </li>
 
-            <li>
+              @endif
+              <li>
                 <a href="#"><i class="fa fa-wrench fa-fw"></i> Product<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
@@ -38,48 +44,7 @@
             </li>
 
           @endauth
-            <li>
-                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="#">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="#">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="#">Third Level <span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level">
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-third-level -->
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="blank.html">Blank Page</a>
-                    </li>
-                    <li>
-                        <a href="login.html">Login Page</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
+
         </ul>
     </div>
     <!-- /.sidebar-collapse -->
