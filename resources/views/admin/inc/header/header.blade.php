@@ -1,10 +1,21 @@
 
             <ul class="nav navbar-top-links navbar-right">
+
+              @if (Auth::user()->role_id == 1)
+
+              <li class="nav-item">
+
+                  <a class="nav-link" href="{{ route('register') }}">Register </a>
+              </li>
+            @endif
+
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
+
                         <li>
                             <a href="#">
                                 <div>

@@ -25,6 +25,7 @@
                             </div>
                         </div>
 
+
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -61,6 +62,25 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="role_name" class="col-md-4 col-form-label text-md-right">{{ __('Role Name') }}</label>
+
+                            <div class="col-md-6">
+                              <select class="form-control" id="role_name" name="role">
+                                <option value="">Select User Role</option>
+                                @foreach ($userrole as $role)
+                                  <option value="{{ $role->role_id }}">{{ $role->role_name }}</option>
+                                @endforeach
+                                </select>
+                                {{-- <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}"  autofocus> --}}
+
+                                @if ($errors->has('role'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('role') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
