@@ -8,6 +8,7 @@ use DB;
 use Auth;
 use App\User;
 use Hash;
+use App\Http\Requests\ChangePassword;
 
 class AdminController extends Controller
 {
@@ -53,21 +54,8 @@ class AdminController extends Controller
         ]);
         return back()->with('hoise', "Password Set Successfully");
     }
-    public function change_password_done(Request $request)
+    public function change_password_done(ChangePassword $request)
     {
-        $request -> validate([
-          'old_pass' => 'required',
-          'new_pass' => 'required|string|min:6',
-          'retype_pass' => 'required|same:new_pass',
-
-        ], [
-          'old_pass.required' => "Please Enter Your Old Password!",
-          'new_pass.required' => "Please Enter Your New Password!",
-          'new_pass.string' => "Invalid New Password!",
-          'new_pass.min' => "New Password should be minimum 6 characters!",
-          'retype_pass.required' => "Please Enter Your Re-type Password!",
-          'retype_pass.same' => "Password Doesn't Match!",
-        ]);
         if (Hash::check($request->old_pass, Auth::user()->password)) {
             $new_pass = bcrypt($request->new_pass);
             if (Hash::check($request->old_pass, $new_pass)) {

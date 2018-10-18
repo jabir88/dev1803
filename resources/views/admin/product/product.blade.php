@@ -39,7 +39,9 @@
                   <tr>
                     <th scope="row">{{ $i }}</th>
                     <td>
+                      <a href="{{ route('product.image.download', ['id'=>$one_pro->id]) }}">
                       <img src="storage/{{ $one_pro->product_photo }}" height="100"alt="">
+                      </a>
                     </td>
                     <td>{{ $one_pro->product_name }}</td>
                     <td>{{ $one_pro->product_price }}</td>

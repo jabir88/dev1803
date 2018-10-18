@@ -11,6 +11,7 @@ use App\Product;
 use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -28,34 +29,23 @@ class ProductController extends Controller
 
     public function productsub(Request $request)
     {
-        if ($request->hasFile('product_photo')) {
-            $path = $request->file('product_photo')->storeAs(
-                'product',
-                "user-".  rand(10000, 200000).".jpeg"
-          );
-
-            Product::insert([
-          'product_name'=>$_POST['product_name'],
-          'product_price'=>$_POST['product_price'],
-          'product_quantity'=>$_POST['product_quantity'],
-          'product_description'=>$_POST['product_description'],
-          'product_photo'=>$path,
-          'created_at'=>Carbon::now(),
-        ]);
-            return back()->with('status', 'Product Add Successfully!');
-
-        //         $path = $request->file('avatar')->storeAs(
-    // 'product',
-    //             $request->user()->id
-// );
-        } else {
-            Product::insert([
+        $product_id =  Product::insertGetId([
         'product_name'=>$_POST['product_name'],
         'product_price'=>$_POST['product_price'],
         'product_quantity'=>$_POST['product_quantity'],
         'product_description'=>$_POST['product_description'],
         'created_at'=>Carbon::now(),
-        ]);
+      ]);
+        if ($request->hasFile('product_photo')) {
+            $path = $request->file('product_photo')->storeAs(
+                'product',
+                "user-".  rand(10000, 200000).".jpeg"
+          );
+            Product::where('id', $product_id)->update([
+            'product_photo' => $path,
+          ]);
+            return back()->with('status', 'Product Add Successfully!');
+        } else {
             return back()->with('status', 'Product Add Successfully!');
         }
         //
@@ -82,7 +72,13 @@ class ProductController extends Controller
           'product_quantity' => $request->product_quantity,
           'product_description' => $request->product_description,
         ]);
-        return back()->with('edit', 'Product Updated!');
+
+        echo "done";
+        // return back()->with('edit', 'Product Updated!');
+
+
+
+
         // if ($request->hasFile('product_photo')) {
             // echo "aje";
 
@@ -116,5 +112,11 @@ class ProductController extends Controller
         // $pdf = PDF::loadView('pdf.invoice', compact('all_pro'));
         // return $pdf->download('invoice.pdf');
         //Show pdf
+    }
+    public function product_download($id)
+    {
+        $product_img = Product::where('id', $id)->first();
+        $product_img = $product_img->product_photo;
+        return Storage::download($product_img);
     }
 }

@@ -81,6 +81,13 @@
                                   </button>
                                 </a>
                               </div>
+                              {{-- <div class="panel-body">
+                                <a href="{{ url('auth/facebook') }}">
+                                  <button type="button" class="loginBtn loginBtn--facebook">
+                                    Login with Google
+                                  </button>
+                                </a>
+                              </div> --}}
                                 {{-- <button class="loginBtn loginBtn--facebook">
                   Login with Facebook
                   </button> --}}

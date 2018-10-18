@@ -46,6 +46,26 @@ class ApiController extends Controller
       // print_r($user);
       // print_r("</pre>");
     }
+//     public function redirectToProviderfacebook()
+//     {
+//         return Socialite::driver('facebook')->redirect();
+//     }
+//
+//     public function handleProviderCallbackfacebook()
+//     {
+//         $user = Socialite::driver('facebook')->stateless()->user();
+//         $authuser = $this->findOrCreateUser($user, 'facebook');
+//         Auth::login($authuser, true);
+//         return redirect($this->redirectTo);
+    // //       $token = $user->token;
+//       // $id = $user->id;
+//       //
+//       // return $id;
+//
+//       // print_r("<pre>");
+//       // print_r($user);
+//       // print_r("</pre>");
+//     }
     public function findOrCreateUser($user)
     {
         $authuser = User::where('provider_id', $user->id)->first();
